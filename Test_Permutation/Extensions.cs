@@ -17,19 +17,21 @@ namespace Test_Permutation
         /// <summary>
         /// get array first index data and remove it
         /// 像JavaScript的Shift方法 ex:{1,2,3} ==> shift() ==> {2,3}
+        /// 無法改變原本的陣列參考,故out一個Shift過的陣列出來
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="arr"></param>
-        /// <returns></returns>
-        public static T[] ArrayShift<T>(this T[] arr)
+        /// <typeparam name="T">element Type</typeparam>
+        /// <param name="arr">origin Array</param>
+        /// <returns>arr[0]</returns>
+        public static T ArrayShift<T>(this T[] arr, out T[] newArr)
         {
-            T[] tmp = new T[arr.Length - 1];
-            for (int i = 1; i < arr.Length; i++)
+            newArr = new T[arr.Length - 1];//準備一個新陣列用來裝載shift後的陣列
+            for (int i = 0; i < newArr.Length; i++)
             {
-                tmp[i - 1] = arr[i];
+                newArr[i] = arr[i + 1];//陣列元素往前移一位
             }
+            //T result = arr[0];//回傳第一個原始陣列元素
 
-            return tmp;
+            return arr[0];
         }
 
         /// <summary>
@@ -39,12 +41,21 @@ namespace Test_Permutation
         /// <typeparam name="T"></typeparam>
         /// <param name="arr"></param>
         /// <returns></returns>
-        public static T[] ArrayUnShift<T>(this T[] arr, T data)
+        public static int ArrayUnShift<T>(this T[] arr, out T[] result, params T[] data)
         {
-            T[] result = new T[arr.Length + 1];
-            result[0] = data;
-            Buffer.BlockCopy(arr, 0, result, 1, arr.Length);
-            return result;
+            result = new T[arr.Length + data.Length];//準備一個新陣列用來裝載unshift後的陣列
+            for(int i = 0; i < result.Length; i++)
+            {
+                if (i < data.Length)
+                {
+                    result[i] = data[i];
+                }
+                else
+                {
+                    result[i] = arr[i - data.Length];
+                }
+            }
+            return arr.Length;
         }
 
         /// <summary>
