@@ -4,6 +4,11 @@ namespace Test_Permutation
 {
     public static class Extensions
     {
+        /// <summary>
+        /// 將數字陣列合併成一個字串輸出
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string ArrayToString(this int[] arr)
         {
             string tmp = string.Empty;
@@ -12,6 +17,28 @@ namespace Test_Permutation
                 tmp += arr[i] + " ";
             }
             return tmp.TrimEnd();
+        }
+
+        /// <summary>
+        /// 將指定元素抽出到第一個元素,其他元素依原來順序排在後面
+        /// ex:{1,2,3,4} == rotate index 2 ==> {3,1,2,4}; {1,2,3,4} == rotate index 1 ==> {2,1,3,4}
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="rotateIndex"></param>
+        /// <param name="rotatedArr"></param>
+        public static void RotateArray<T>(this T[] arr, int rotateIndex, out T[] rotatedArr)
+        {
+            rotatedArr = new T[arr.Length];
+            rotatedArr[0] = arr[rotateIndex];//要被旋轉的陣列元素
+            for (int i = 1, j = 0; i < rotatedArr.Length; i++, j++)
+            {
+                if (j == rotateIndex)
+                {
+                    j++;
+                }
+                rotatedArr[i] = arr[j];
+            }
         }
 
         /// <summary>

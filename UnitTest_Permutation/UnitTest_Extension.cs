@@ -59,6 +59,19 @@ namespace UnitTest_Permutation
             Debug.WriteLine("Speend Time: " + (end-start).TotalMilliseconds + " ms");
         }
 
+        [TestMethod]
+        public void TestMethod_RotateArray()
+        {
+            int[] arr = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            int[] rotatedArr;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr.RotateArray<int>(i, out rotatedArr);
+                Debug.WriteLine("抽換第" + i + "個後的新陣列: " + rotatedArr.ArrayToString());
+            }
+        }
+
         [TestCleanup]
         public void Clear()
         {

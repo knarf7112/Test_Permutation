@@ -6,9 +6,13 @@ namespace Test_Permutation
     {
         static void Main(string[] args)
         {
-            int[] arr = new int[] { 1, 2, 3 };
-            RoatateArr(ref arr, 2);
-            Console.WriteLine(arr.ArrayToString());
+            int[] arr = new int[] { 1, 2, 3, 4, 5 };
+            for (int i = 0; i < arr.Length; i++)
+            {
+                int[] tmp = (int[])arr.Clone();
+                RoatateArr(ref tmp, i);
+                Console.WriteLine(tmp.ArrayToString());
+            }
             //RecursiveArray(arr, arr.Length);
             Console.ReadKey();
         }
