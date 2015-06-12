@@ -6,42 +6,48 @@ namespace Test_Permutation
     {
         static void Main(string[] args)
         {
-            int[] arr = new int[] { 1, 2, 3, 4, 5 };
-            for (int i = 0; i < arr.Length; i++)
-            {
-                int[] tmp = (int[])arr.Clone();
-                RoatateArr(ref tmp, i);
-                Console.WriteLine(tmp.ArrayToString());
-            }
-            //RecursiveArray(arr, arr.Length);
+            int[] arr = new int[] { 1, 2, 3,  };
+            QQ(arr, 0);
+            //RecursiveArray(arr,arr.Length);
+            Console.WriteLine("count: " + count);
             Console.ReadKey();
         }
-
+        static int count = 0;
         static void RecursiveArray(int[] arr, int len)
         {
-            if (len == 1) return;
+            if (len == 0)
+            {
+                
+                return;
+            }
 
             for (int i = 0; i < len; i++)
             {
-                Console.WriteLine();
-                RecursiveArray(arr, len + 1);
+                int[] tmp = (int[])arr.Clone();
+                int[] tmp2;
+                arr.RotateArray<int>(i, i, out tmp);
+                Console.WriteLine("第" + i + "次的陣列: " + tmp.ArrayToString());
+                int ele = tmp.ArrayShift<int>(out tmp2);
+                Console.WriteLine("ele:" + ele);
+                RecursiveArray(tmp, len - 1);
+                //Console.WriteLine("第" + i + "次的陣列: " + arr.ArrayToString());
+                count++;
+            }
+
+        }
+
+        static void QQ(int[] arr,int len)
+        {
+            if (len == arr.Length) return;
+            Console.WriteLine("len=" + len);
+            for (int i = 0; i <= len; i++)
+            {
+                int[] tmp;
+                arr.RotateArray<int>(i, len, out tmp);
+                Console.WriteLine("i=" + i + ": len=" + len + ": arr=" + tmp.ArrayToString());
+                QQ(tmp, len + 1);
             }
         }
 
-        static void RoatateArr(ref int[] arr, int rotateIndex)
-        {
-            int[] result = new int[arr.Length];
-            result[0] = arr[rotateIndex];
-            for (int i = 1,j = 0; i < result.Length; i++,j++)
-            {
-                
-                if (j == rotateIndex)
-                {
-                    j++;
-                }
-                result[i] = arr[j];
-            }
-            arr = result;
-        }
     }
 }

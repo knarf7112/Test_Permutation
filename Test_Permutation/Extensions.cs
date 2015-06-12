@@ -42,6 +42,41 @@ namespace Test_Permutation
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="rotateIndex"></param>
+        /// <param name="fixedCount"></param>
+        /// <param name="rotatedArr"></param>
+        public static void RotateArray<T>(this T[] arr, int rotateIndex, int fixedCount, out T[] rotatedArr)
+        {
+            rotatedArr = new T[arr.Length];
+            for (int i = 0,j = 0; i < rotatedArr.Length; i++,j++)
+            {
+                //若(結果陣列)i的值小於要fixed的大小,就把陣列值對應過去固定
+                if (i < fixedCount)
+                {
+                    rotatedArr[i] = arr[i];
+                    continue;
+                }
+                //(去掉固定部分)剩餘陣列索引的第一個元素
+                else if(i == (0 + fixedCount))
+                {
+                    rotatedArr[i] = arr[rotateIndex + fixedCount];
+                    continue;
+                }
+                //
+                else if (j == (rotateIndex + fixedCount))
+                {
+                    j++;
+                }
+                rotatedArr[i] = arr[j];
+            }
+
+        }
+
+        /// <summary>
         /// get array first index data and remove it
         /// 像JavaScript的Shift方法 ex:{1,2,3} ==> shift() ==> {2,3}
         /// 無法改變原本的陣列參考,故out一個Shift過的陣列出來

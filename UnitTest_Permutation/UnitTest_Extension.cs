@@ -72,6 +72,19 @@ namespace UnitTest_Permutation
             }
         }
 
+        [TestMethod]
+        public void TestMethod_RotateArrayIncludeFixedCount()
+        {
+            //int[] arr = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            int[] arr = new int[] { 1, 2, 3, 4, };
+            int[] rotatedArr;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr.RotateArray<int>(i, i,out rotatedArr);
+                Debug.WriteLine("抽換第" + i + "個後的新陣列: " + rotatedArr.ArrayToString());
+            }
+        }
+
         [TestCleanup]
         public void Clear()
         {
