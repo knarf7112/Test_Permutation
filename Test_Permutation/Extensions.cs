@@ -44,36 +44,37 @@ namespace Test_Permutation
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="arr"></param>
-        /// <param name="rotateIndex"></param>
-        /// <param name="fixedCount"></param>
-        /// <param name="rotatedArr"></param>
-        public static void RotateArray<T>(this T[] arr, int rotateIndex, int fixedCount, out T[] rotatedArr)
+        /// <typeparam name="T">陣列元素型別</typeparam>
+        /// <param name="arr">原始陣列</param>
+        /// <param name="rotateIndex">要置換的陣列索引</param>
+        /// <param name="fixedCount">固定的陣列數量(從0開始)</param>
+        /// <param name="rotatedArr">旋轉後的陣列</param>
+        public static void RotateArray<T>(this T[] arr, int fixedCount, int rotateIndex, out T[] newArr)
         {
-            rotatedArr = new T[arr.Length];
-            for (int i = 0,j = 0; i < rotatedArr.Length; i++,j++)
+            newArr = new T[arr.Length];
+            //--------------------------------------------
+            // copy array for rotate
+            T[] rotateArr = new T[arr.Length - fixedCount];
+            T[] rotatedArr ;
+            for (int i = 0; i < rotateArr.Length; i++)
             {
-                //若(結果陣列)i的值小於要fixed的大小,就把陣列值對應過去固定
+                rotateArr[i] = arr[fixedCount + i];
+            }
+            rotateArr.RotateArray<T>(rotateIndex - fixedCount, out rotatedArr);
+            //--------------------------------------------
+            //
+            for (int i = 0; i < newArr.Length; i++)
+            {
                 if (i < fixedCount)
                 {
-                    rotatedArr[i] = arr[i];
-                    continue;
+                    newArr[i] = arr[i];
                 }
-                //(去掉固定部分)剩餘陣列索引的第一個元素
-                else if(i == (0 + fixedCount))
+                else
                 {
-                    rotatedArr[i] = arr[rotateIndex + fixedCount];
-                    continue;
+                    newArr[i] = rotatedArr[i - fixedCount];
                 }
-                //
-                else if (j == (rotateIndex + fixedCount))
-                {
-                    j++;
-                }
-                rotatedArr[i] = arr[j];
             }
-
+            
         }
 
         /// <summary>

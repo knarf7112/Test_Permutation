@@ -2,19 +2,34 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 //
 using Test_Permutation;
-using System.Diagnostics;//load extension method
+using System.Diagnostics;
+using System.Collections.Generic;//load extension method
 
 namespace UnitTest_Permutation
 {
     [TestClass]
     public class UnitTest_Extension
     {
+        BackTracking backTracking;
         [TestInitialize]
         public void Init()
         {
-
+            backTracking = new BackTracking();
         }
 
+        [TestMethod]
+        public void TestMethod_BackTracking()
+        {
+            int[] arr = new int[] { 1, 2, 3, 4, };
+            List<int[]> allBackTracking = new List<int[]>();
+            BackTracking.RecursiveArray(arr, 0,ref allBackTracking);
+            int count = 1;
+            foreach (int[] item in allBackTracking)
+            {
+                Debug.WriteLine("第" + count + "種排列組合: \t" + item.ArrayToString()); 
+                count++;
+            }
+        }
         [TestMethod]
         public void TestMethod_ArrayRotate()
         {
@@ -76,11 +91,14 @@ namespace UnitTest_Permutation
         public void TestMethod_RotateArrayIncludeFixedCount()
         {
             //int[] arr = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            int[] arr = new int[] { 1, 2, 3, 4, };
+            int[] arr = new int[] { 1, 2, 3, 4, 5 };
             int[] rotatedArr;
-            for (int i = 0; i < arr.Length; i++)
+            //arr.RotateArray<int>(1, 3, out rotatedArr);
+            //Debug.WriteLine("固定地0個元素,位移第2個元素: " + rotatedArr.ArrayToString());
+            for (int i = 1; i < arr.Length; i++)
             {
-                arr.RotateArray<int>(i, i,out rotatedArr);
+                //故訂第一個旋轉第i個
+                arr.RotateArray<int>(1, i, out rotatedArr);
                 Debug.WriteLine("抽換第" + i + "個後的新陣列: " + rotatedArr.ArrayToString());
             }
         }
@@ -88,7 +106,7 @@ namespace UnitTest_Permutation
         [TestCleanup]
         public void Clear()
         {
-
+            backTracking = null;
         }
     }
 }
