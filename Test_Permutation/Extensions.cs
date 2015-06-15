@@ -42,36 +42,36 @@ namespace Test_Permutation
         }
 
         /// <summary>
-        /// 
+        /// 固定前len數量的陣列元素並更換第i個陣列元素 ex:{1,2,3,4,5,6} == 固定1,2換5 ==> {1,2,5,3,4,6}
         /// </summary>
         /// <typeparam name="T">陣列元素型別</typeparam>
         /// <param name="arr">原始陣列</param>
         /// <param name="rotateIndex">要置換的陣列索引</param>
-        /// <param name="fixedCount">固定的陣列數量(從0開始)</param>
-        /// <param name="rotatedArr">旋轉後的陣列</param>
+        /// <param name="fixedCount">固定的陣列數量(從0開始);固定1就不可換第0個陣列元素</param>
+        /// <param name="rotatedArr">旋轉後的新陣列</param>
         public static void RotateArray<T>(this T[] arr, int fixedCount, int rotateIndex, out T[] newArr)
         {
             newArr = new T[arr.Length];
             //--------------------------------------------
-            // copy array for rotate
-            T[] rotateArr = new T[arr.Length - fixedCount];
+            // copy array for rotate 先複製固定的陣列元素
+            T[] rotateArr = new T[arr.Length - fixedCount];//存放去掉固定陣列元素的剩餘陣列元素 ex: {1,2,3,4,5} => 固定1,2 => {3,4,5}
             T[] rotatedArr ;
             for (int i = 0; i < rotateArr.Length; i++)
             {
                 rotateArr[i] = arr[fixedCount + i];
             }
-            rotateArr.RotateArray<T>(rotateIndex - fixedCount, out rotatedArr);
+            rotateArr.RotateArray<T>(rotateIndex - fixedCount, out rotatedArr);//ex: {3,4,5} => 旋轉4 => {4,3,5}
             //--------------------------------------------
             //
             for (int i = 0; i < newArr.Length; i++)
             {
                 if (i < fixedCount)
                 {
-                    newArr[i] = arr[i];
+                    newArr[i] = arr[i]; //若i小於固定的元素數量,把固定的陣列元素複製過去 ex:(舊的陣列){1,2,3,4,5} => 固定的部分{1,2} => (新的陣列){1,2, , , ,}
                 }
                 else
                 {
-                    newArr[i] = rotatedArr[i - fixedCount];
+                    newArr[i] = rotatedArr[i - fixedCount];//新陣列複製旋轉後的陣列元素 ex:(舊的陣列){1,2,3,4,5} => 旋轉完成的部分{4,3,5} => (新的陣列){ , ,4,3,5,}
                 }
             }
             
